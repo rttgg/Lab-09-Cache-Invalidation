@@ -1,0 +1,27 @@
+{
+  "name": "Lab-09-Cache-Invalidation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rttgg/Lab-09-Cache-Invalidation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rttgg/Lab-09-Cache-Invalidation/issues"
+  },
+  "homepage": "https://github.com/rttgg/Lab-09-Cache-Invalidation#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "pg": "^7.11.0"
+  }
+}
