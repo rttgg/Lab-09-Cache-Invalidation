@@ -24,6 +24,7 @@ client.on('error', err => console.error(err));
 app.get('/location', getLocation);
 app.get('/weather', getWeather);
 app.get('/events', getEvents);
+app.get('/movies', getMovies);
 
 // Make sure the server is listening for requests
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
@@ -125,6 +126,28 @@ Event.prototype = {
     client.query(SQL, values);
   }
 };
+function Movie(movie) {
+  this.tableName = 'movies';
+  this.title = movie.title;
+  this.overview = movie.overview;
+  this.average_votes = movie.vote_average;
+  this.total_votes = movie.vote_count;
+  this.image_url = movie.poster_path;
+  this.popularity = movie.popularity;
+  this.released_on = new Date(movie.release_date).toDateString();
+}
+
+Movie.tableName = 'movies';
+Movie.lookup = lookup;
+
+Movie.prototype = {
+  save: function (location_id) {
+    const SQL = `INSERT INTO ${this.tableName} (title, overview, average_votes, total_votes, image_url, popularity, released_on, location_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+    const values = [this.title, this.overview, this.vote_average, this.total_votes, this.image_url, this.popularity, this.released_on, location_id];
+
+    client.query(SQL, values);
+  }
+};
 
 function getLocation(request, response) {
   Location.lookupLocation({
@@ -199,6 +222,39 @@ function getEvents(request, response) {
           });
 
           response.send(events);
+        })
+        .catch(error => handleError(error, response));
+    }
+  });
+}
+
+function getMovies(request, response) {
+  Movie.lookup({
+    tableName: Movie.tableName,
+
+    location: request.query.data.id,
+
+    cacheHit: function (result) {
+      response.send(result.rows);
+    },
+
+    cacheMiss: function () {
+      let areaArr = request.query.data.formatted_query.split(' ');
+      let areaStr = areaArr[0];
+      areaStr = areaStr.slice(0,-1);
+      console.log('query', areaStr)
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&query=${areaStr}&page=1&include_adult=false`
+
+      superagent.get(url)
+        .then(result => {
+          console.log('line246',result.body)
+          const movies = result.body.results.map(movieData => {
+            const movie = new Movie(movieData);
+            movie.save(request.query.data.id);
+            return movie;
+          });
+          console.log('line251', movies);
+          response.send(movies);
         })
         .catch(error => handleError(error, response));
     }
