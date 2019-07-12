@@ -2,14 +2,37 @@
 
 Number and name of feature: Movies
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 2hrs
 
-Start time: _____
+Start time: 9am
 
-Finish time: _____
+Finish time: 10am
 
-Actual time needed to complete: _____
+Actual time needed to complete: 1hr
 
+# Lab-09-Cache-Invalidation
+
+Number and name of feature: Yelp
+
+Estimate of time needed to complete: 2 hrs
+
+Start time: 10am
+
+Finish time: 11am
+
+Actual time needed to complete: 1hr
+
+# Lab-09-Cache-Invalidation
+
+Number and name of feature: Cache invalidation
+
+Estimate of time needed to complete: 2hrs
+
+Start time: 11am
+
+Finish time: 1:40pm
+
+Actual time needed to complete: 2hrs and 40min
 
 # Project Name
 
