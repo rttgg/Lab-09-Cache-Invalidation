@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS weathers;
-DROP TABLE IF EXISTS locations;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS yelps;
+DROP TABLE IF EXISTS locations;
 
 -- this.search_query = locationName;
 -- this.formatted_query = result.body.results[0].formatted_address;
@@ -21,7 +21,7 @@ CREATE TABLE weathers (
     id SERIAL PRIMARY KEY, 
     forecast VARCHAR(255), 
     time VARCHAR(255),
-    created_time VARCHAR(255), 
+    created_at VARCHAR(255), 
     location_id INTEGER NOT NULL,
     FOREIGN KEY (location_id) REFERENCES locations (id)
   );
@@ -32,7 +32,7 @@ CREATE TABLE weathers (
   name VARCHAR(255),
   event_date VARCHAR(255),
   summary TEXT,
-  created_time VARCHAR(255), 
+  created_at VARCHAR(255), 
   location_id INTEGER NOT NULL,
   FOREIGN KEY (location_id) REFERENCES locations (id)
 );
@@ -46,7 +46,7 @@ CREATE TABLE movies (
   image_url TEXT,
   popularity TEXT,
   released_on TEXT,
-  created_time VARCHAR(255), 
+  created_at VARCHAR(255), 
   location_id INTEGER NOT NULL,
   FOREIGN KEY (location_id) REFERENCES locations (id)
 );
@@ -58,7 +58,7 @@ CREATE TABLE yelps (
     price VARCHAR(255),
     rating VARCHAR(255),
     url TEXT,
-    created_time VARCHAR(255), 
+    created_at VARCHAR(255), 
     location_id INTEGER NOT NULL,
     FOREIGN KEY (location_id) REFERENCES locations (id)
   );
