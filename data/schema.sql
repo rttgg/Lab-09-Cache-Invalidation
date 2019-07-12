@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS weathers;
 DROP TABLE IF EXISTS locations;
+DROP TABLE IF EXISTS events;
 
 -- this.search_query = locationName;
 -- this.formatted_query = result.body.results[0].formatted_address;
@@ -21,3 +22,13 @@ CREATE TABLE weathers (
     location_id INTEGER NOT NULL,
     FOREIGN KEY (location_id) REFERENCES locations (id)
   );
+
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  link TEXT,
+  name VARCHAR(255),
+  event_date VARCHAR(255),
+  summary TEXT,
+  location_id INTEGER NOT NULL,
+        FOREIGN KEY (location_id) REFERENCES locations (id)
+);
