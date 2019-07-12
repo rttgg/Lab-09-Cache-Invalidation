@@ -16,8 +16,8 @@ client.on('error', err => console.error(err));
 
 function buildDB(){
     client.query(`
-    DROP TABLE IF EXISTS weathers;
     DROP TABLE IF EXISTS locations;
+    DROP TABLE IF EXISTS weathers;
     DROP TABLE IF EXISTS events;
     
     CREATE TABLE locations (
@@ -45,6 +45,19 @@ function buildDB(){
         location_id INTEGER NOT NULL,
         FOREIGN KEY (location_id) REFERENCES locations (id)
       );
+      CREATE TABLE movies (
+        id SERIAL PRIMARY KEY,
+        title TEXT,
+        overview TEXT,
+        average_votes TEXT,
+        total_votes TEXT,
+        image_url TEXT,
+        popularity TEXT,
+        released_on TEXT,
+        location_id INTEGER NOT NULL,
+        FOREIGN KEY (location_id) REFERENCES locations (id)
+      );
+
     `)
     console.log('build complite')
 }
