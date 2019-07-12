@@ -33,6 +33,7 @@ function buildDB(){
         id SERIAL PRIMARY KEY, 
         forecast VARCHAR(255), 
         time VARCHAR(255), 
+        created_time INTEGER,
         location_id INTEGER NOT NULL,
         FOREIGN KEY (location_id) REFERENCES locations (id)
       );
@@ -43,6 +44,7 @@ function buildDB(){
         name VARCHAR(255),
         event_date VARCHAR(255),
         summary TEXT,
+        created_time INTEGER,
         location_id INTEGER NOT NULL,
         FOREIGN KEY (location_id) REFERENCES locations (id)
       );
@@ -55,6 +57,7 @@ function buildDB(){
         image_url TEXT,
         popularity TEXT,
         released_on TEXT,
+        created_time INTEGER,
         location_id INTEGER NOT NULL,
         FOREIGN KEY (location_id) REFERENCES locations (id)
       );
@@ -65,6 +68,7 @@ function buildDB(){
         price VARCHAR(255),
         rating VARCHAR(255),
         url TEXT,
+        created_time VARCHAR(255),
         location_id INTEGER NOT NULL,
         FOREIGN KEY (location_id) REFERENCES locations (id)
       );
