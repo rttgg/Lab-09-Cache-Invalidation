@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS weathers;
 DROP TABLE IF EXISTS locations;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS yelps;
 
 -- this.search_query = locationName;
 -- this.formatted_query = result.body.results[0].formatted_address;
@@ -46,3 +47,14 @@ CREATE TABLE movies (
   location_id INTEGER NOT NULL,
   FOREIGN KEY (location_id) REFERENCES locations (id)
 );
+
+CREATE TABLE yelps ( 
+    id SERIAL PRIMARY KEY, 
+    name VARCHAR(255), 
+    image_url TEXT, 
+    price VARCHAR(255),
+    rating VARCHAR(255),
+    url TEXT,
+    location_id INTEGER NOT NULL,
+    FOREIGN KEY (location_id) REFERENCES locations (id)
+  );
