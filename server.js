@@ -95,7 +95,7 @@ function Weather(day) {
   this.tableName = 'weathers';
   this.forecast = day.summary;
   this.time = new Date(day.time * 1000).toString().slice(0, 15);
-  this.created_time = Date.now();
+  this.created_at = Date.now();
 }
 
 Weather.tableName = 'weathers';
@@ -103,8 +103,8 @@ Weather.lookup = lookup;
 
 Weather.prototype = {
   save: function (location_id) {
-    const SQL = `INSERT INTO ${this.tableName} (forecast, time, location_id, created_time) VALUES ($1, $2, $3, $4);`;
-    const values = [this.forecast, this.time, location_id, this.created_time];
+    const SQL = `INSERT INTO ${this.tableName} (forecast, time, location_id, created_at) VALUES ($1, $2, $3, $4);`;
+    const values = [this.forecast, this.time, location_id, this.created_at];
 
     client.query(SQL, values);
   }
@@ -116,7 +116,7 @@ function Event(event) {
   this.name = event.name.text;
   this.event_date = new Date(event.start.local).toString().slice(0, 15);
   this.summary = event.summary;
-  this.created_time = Date.now();
+  this.created_at = Date.now();
 }
 
 Event.tableName = 'events';
@@ -124,8 +124,8 @@ Event.lookup = lookup;
 
 Event.prototype = {
   save: function (location_id) {
-    const SQL = `INSERT INTO ${this.tableName} (link, name, event_date, summary, location_id,created_time) VALUES ($1, $2, $3, $4, $5, $6);`;
-    const values = [this.link, this.name, this.event_date, this.summary, location_id, this.created_time];
+    const SQL = `INSERT INTO ${this.tableName} (link, name, event_date, summary, location_id,created_at) VALUES ($1, $2, $3, $4, $5, $6);`;
+    const values = [this.link, this.name, this.event_date, this.summary, location_id, this.created_at];
 
     client.query(SQL, values);
   }
@@ -139,7 +139,7 @@ function Movie(movie) {
   this.image_url = movie.poster_path;
   this.popularity = movie.popularity;
   this.released_on = new Date(movie.release_date).toDateString();
-  this.created_time = Date.now();
+  this.created_at = Date.now();
 }
 
 Movie.tableName = 'movies';
@@ -147,8 +147,8 @@ Movie.lookup = lookup;
 
 Movie.prototype = {
   save: function (location_id) {
-    const SQL = `INSERT INTO ${this.tableName} (title, overview, average_votes, total_votes, image_url, popularity, released_on, location_id, created_time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
-    const values = [this.title, this.overview, this.vote_average, this.total_votes, this.image_url, this.popularity, this.released_on, location_id, this.created_time];
+    const SQL = `INSERT INTO ${this.tableName} (title, overview, average_votes, total_votes, image_url, popularity, released_on, location_id, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+    const values = [this.title, this.overview, this.vote_average, this.total_votes, this.image_url, this.popularity, this.released_on, location_id, this.created_at];
 
     client.query(SQL, values);
   }
@@ -161,7 +161,7 @@ function Yelp(yelp) {
   this.price = yelp.price;
   this.rating = yelp.rating;
   this.url = yelp.url;
-  this.created_time = Date.now();
+  this.created_at = Date.now();
 }
 
 Yelp.tableName = 'yelps';
@@ -169,8 +169,8 @@ Yelp.lookup = lookup;
 
 Yelp.prototype = {
   save: function (location_id) {
-    const SQL = `INSERT INTO ${this.tableName} (name, image_url, price, rating, url, location_id, created_time) VALUES ($1, $2, $3, $4, $5, $6, $7);`;
-    const values = [this.name, this.image_url, this.price, this.rating, this.url, location_id, this.created_time];
+    const SQL = `INSERT INTO ${this.tableName} (name, image_url, price, rating, url, location_id, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+    const values = [this.name, this.image_url, this.price, this.rating, this.url, location_id, this.created_at];
 
     client.query(SQL, values);
   }
@@ -206,7 +206,7 @@ function getWeather(request, response) {
     location: request.query.data.id,
 
     cacheHit: function (result) {
-      if(Date.now() - result.rows[0].created_time > 900000){
+      if(Date.now() - result.rows[0].created_at > 15000){
         result.rows.forEach(row=>{
           client.query(`
             DELETE FROM weathers WHERE location_id=${request.query.data.id}
@@ -260,7 +260,7 @@ function getEvents(request, response) {
     location: request.query.data.id,
 
     cacheHit: function (result) {
-      if(Date.now() - result.rows[0].created_time > 8640000000){
+      if(Date.now() - result.rows[0].created_at > 8640000000){
         result.rows.forEach(row=>{
           client.query(`
             DELETE FROM events WHERE location_id=${request.query.data.id}
@@ -313,7 +313,7 @@ function getMovies(request, response) {
     location: request.query.data.id,
 
     cacheHit: function (result) {
-      if(Date.now() - result.rows[0].created_time > 8640000000){
+      if(Date.now() - result.rows[0].created_at > 8640000000){
         result.rows.forEach(row=>{
           client.query(`
             DELETE FROM events WHERE location_id=${request.query.data.id}
@@ -372,7 +372,7 @@ function getYelps(request, response) {
     location: request.query.data.id,
 
     cacheHit: function (result) {
-      if(Date.now() - result.rows[0].created_time > 8640000000){
+      if(Date.now() - result.rows[0].created_at > 8640000000){
         result.rows.forEach(row=>{
           client.query(`
             DELETE FROM events WHERE location_id=${request.query.data.id}
